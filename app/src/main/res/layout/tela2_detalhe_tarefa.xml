@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context=".Tela2_Detalhe_Tarefa">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titulo da Tarefa:" />
+
+    <EditText
+        android:id="@+id/edt_titulo_detail_tela2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Adicione um título para sua tarefa" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Descrição da tarefa:" />
+
+    <EditText
+        android:id="@+id/edt_descricao_detail_tela2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Adicione uma descrição para a sua tarefa" />
+
+    <Button
+        android:id="@+id/btn_tela2"
+        android:layout_marginTop="16dp"
+        android:text="CONCLUIR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/Wenge"/>
+
+</LinearLayout>
