@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats
+package com.comunidadedevspace.taskbeats.presentation
 
 import android.app.Activity
 import android.content.Context
@@ -11,6 +11,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.data.Tarefas
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -55,7 +57,9 @@ class Tela2_Detalhe_Tarefa : AppCompatActivity() {
                 if (tarefa == null) { // -> veio pelo floatingAction Button, tarefa n existe.
                     criarOUeditarTarefa(0, titulo, descricao, MainActivity.ActionType.CREATE)
                 }else{
-                    criarOUeditarTarefa(tarefa!!.id, titulo, descricao, MainActivity.ActionType.UPDATE)
+                    criarOUeditarTarefa(tarefa!!.id, titulo, descricao,
+                        MainActivity.ActionType.UPDATE
+                    )
                 }
             } else {
                 mensagem(it, "Preencha todos os campos")

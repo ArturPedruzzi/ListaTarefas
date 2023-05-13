@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats
+package com.comunidadedevspace.taskbeats.presentation
 
 
 import android.app.Activity
@@ -12,9 +12,11 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
+import com.comunidadedevspace.taskbeats.ListaTarefasApplication
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.data.AppDataBase
+import com.comunidadedevspace.taskbeats.data.Tarefas
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -33,12 +35,7 @@ class MainActivity : AppCompatActivity() {
     val adapterList = TarefasAdapter(::abrirTela2_click_item)
 
 
-    private val dataBase by lazy {
-        Room.databaseBuilder(
-            applicationContext,
-            AppDataBase::class.java, "tarefas-database"
-        ).build()
-    }
+    lateinit var dataBase: AppDataBase
 
     private val dao by lazy {
         dataBase.tarefasDao()
@@ -58,12 +55,15 @@ class MainActivity : AppCompatActivity() {
 
             when (tarefaAction.actionType) {
 
-                ActionType.CREATE.name -> { insertTarefa(tarefa)
+                ActionType.CREATE.name -> {
+                    insertTarefa(tarefa)
                 }
-                ActionType.UPDATE.name -> { updateList(tarefa)
+                ActionType.UPDATE.name -> {
+                    updateList(tarefa)
 
                 }
-                ActionType.DELETE.name -> { deleleByID(tarefa.id)
+                ActionType.DELETE.name -> {
+                    deleleByID(tarefa.id)
                 }
 
             }
@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tela1_lista_tarefas)
 
-        listDataBase()
 
         // recuperando Iu component imagem para a mainActivity
         conteudo_lista_vazia = findViewById(R.id.ctn_conteudo)
@@ -94,7 +93,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun listDataBase() {
+    override fun onStart() {
+        super.onStart()
+        dataBase = (application as ListaTarefasApplication).dataBase
+
+        readDataBase()
+    }
+
+    private fun readDataBase() {
         CoroutineScope(IO).launch {
             val listDataBase: List<Tarefas> = dao.getAll()
             adapterList.submitList(listDataBase)
@@ -104,28 +110,28 @@ class MainActivity : AppCompatActivity() {
     private fun insertTarefa(tarefa: Tarefas) {
         CoroutineScope(IO).launch {
             dao.insert(tarefa)
-            listDataBase()
+            readDataBase()
         }
     }
 
     private fun updateList(tarefa: Tarefas) {
         CoroutineScope(IO).launch {
             dao.update(tarefa)
-            listDataBase()
+            readDataBase()
         }
     }
 
     private fun deleleByID(id: Int) {
         CoroutineScope(IO).launch {
             dao.deleteById(id)
-            listDataBase()
+            readDataBase()
         }
     }
 
     private fun delele_all() {
         CoroutineScope(IO).launch {
             dao.deleteAll()
-            listDataBase()
+            readDataBase()
         }
     }
 

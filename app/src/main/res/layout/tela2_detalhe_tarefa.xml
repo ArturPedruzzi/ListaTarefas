@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:orientation="vertical"
-    tools:context=".Tela2_Detalhe_Tarefa">
+    tools:context=".presentation.Tela2_Detalhe_Tarefa">
 
     <TextView
         android:layout_width="wrap_content"
